@@ -29,20 +29,22 @@ Time Complexity: O(log n)
 Space Complexity: O(1)
 
 Idea:
-Создать счетчик разрезов cuts_num, равный нулю.
-Запустить цикл while, пока people_num больше 1.
-При каждом шаге цикла добавлять 1 к счетчику разрезов и делить people_num на два.
-Таким образом, за каждый проход цкла мы как будто делаем один разрез, тем самым максимально удваивая количество частей
-и считаем количество разрезов.
-После прохождения цикла вернуть cuts_num.
+Создать переменную для хранения максимального количества кусков на текущий момент (pieces)
+и переменную для хранения количества сделанных разрезов (cuts).
+В начале количество кусков равно одному, а количество разрезов равно нулю.
+Запустить цикл while, с условием, пока количество кусков (pieces) меньше заданного количества людей (people_num).
+На каждом шаге цикла добавлять 1 к счетчику разрезов и удваивать количество кусков,
+что будет показывать максимальное количество кусков, которое мы могли получить к текущему моменту.
+После прохождения цикла вернуть значение переменной cuts.
 """
 
 def find_min_count_of_cuts(people_num: int) -> int:
-    cuts_num = 0
-    while people_num > 1:
-        cuts_num += 1
-        people_num = people_num / 2
-    return cuts_num
+    pieces = 1
+    cuts = 0
+    while pieces < people_num:
+        cuts += 1
+        pieces *= 2
+    return cuts
 
 if __name__ == "__main__":
     people_num = int(input())
@@ -52,3 +54,5 @@ if __name__ == "__main__":
     assert find_min_count_of_cuts(6) == 3
     assert find_min_count_of_cuts(5) == 3
     assert find_min_count_of_cuts(1) == 0
+    assert find_min_count_of_cuts(2) == 1
+    assert find_min_count_of_cuts(3) == 2
